@@ -1,23 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
+import { Welcome } from "./Components/Welcome";
+import { Game } from "./Components/Game/Game";
 
 function App() {
+  const [name, setName] = useState("");
+  const [page, setPage] = useState("welcome");
+
+  const handleChange = (newValue) => {
+    setName(newValue);
+  };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (!name) return;
+
+    setPage("game");
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {page === "welcome" && (
+        <Welcome name={name} onChange={handleChange} onSubmit={handleSubmit} />
+      )}
+      {page === "game" && <Game name={name} />}
     </div>
   );
 }
