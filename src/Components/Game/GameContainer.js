@@ -16,9 +16,7 @@ const GameContainer = () => {
       })
     );
     const droppedItem = cardsVals.find((card) => {
-      if (card.id === id) {
-        return card;
-      }
+      return card.id === id;
     });
 
     if (state !== "selectable" && !droppedItem.expected.includes(state)) {
@@ -59,41 +57,27 @@ const GameContainer = () => {
           className="slots"
           style={{ display: "flex", justifyContent: "center" }}
         >
-          <DropItem className="solution" maxItems={1} onDrop={onDrop("1")}>
-            {cardsVals
-              .filter((card) => card.state === "1")
-              .map((card) => (
-                <DragItem id={card.id} data={card} key={`card ${card.id}`} />
-              ))}
-          </DropItem>
-          <DropItem className="solution" maxItems={1} onDrop={onDrop("2")}>
-            {cardsVals
-              .filter((card) => card.state === "2")
-              .map((card) => (
-                <DragItem id={card.id} data={card} key={`card ${card.id}`} />
-              ))}
-          </DropItem>
-          <DropItem className="solution" maxItems={1} onDrop={onDrop("3")}>
-            {cardsVals
-              .filter((card) => card.state === "3")
-              .map((card) => (
-                <DragItem id={card.id} data={card} key={`card ${card.id}`} />
-              ))}
-          </DropItem>
-          <DropItem className="solution" maxItems={1} onDrop={onDrop("4")}>
-            {cardsVals
-              .filter((card) => card.state === "4")
-              .map((card) => (
-                <DragItem id={card.id} data={card} key={`card ${card.id}`} />
-              ))}
-          </DropItem>
-          <DropItem className="solution" maxItems={1} onDrop={onDrop("5")}>
-            {cardsVals
-              .filter((card) => card.state === "5")
-              .map((card) => (
-                <DragItem id={card.id} data={card} key={`card ${card.id}`} />
-              ))}
-          </DropItem>
+          {cardsVals.map(({ id }, index) => {
+            console.log(index);
+            return (
+              <DropItem
+                className="solution"
+                maxItems={1}
+                onDrop={onDrop(index)}
+                key={id}
+              >
+                {cardsVals
+                  .filter((card) => card.state === index)
+                  .map((card) => (
+                    <DragItem
+                      id={card.id}
+                      data={card}
+                      key={`card ${card.id}`}
+                    />
+                  ))}
+              </DropItem>
+            );
+          })}
         </div>
       </section>
     </>
