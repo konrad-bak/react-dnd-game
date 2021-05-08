@@ -58,7 +58,6 @@ const GameContainer = () => {
           style={{ display: "flex", justifyContent: "center" }}
         >
           {cardsVals.map(({ id }, index) => {
-            console.log(index);
             return (
               <DropItem
                 className="solution"
