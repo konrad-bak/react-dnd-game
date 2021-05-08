@@ -1,0 +1,29 @@
+.container {
+  width: 80%;
+  background: #dfe3e6;
+  border-radius: 5px;
+  margin: 40px 40px 0 40px;
+  padding: 0 10px;
+  height: 250px;
+}
+.container.solution {
+  width: 17%;
+  margin-right: 3%;
+}
+
+h3 {
+  text-align: center;
+  padding-left: 10px;
+  margin: 10px 0;
+}
+
+.body {
+  display: flex;
+  justify-content: center;
+}
+.body .item {
+  margin: 0 30px;
+}
+/* .body.solution {
+  justify-content: flex-start;
+} */

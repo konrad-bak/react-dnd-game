@@ -1,7 +1,5 @@
 import { useState } from "react";
 import GameContainer from "./GameContainer";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
 
 export const Game = (props) => {
   const [timer, setTimer] = useState(0);
@@ -28,7 +26,7 @@ export const Game = (props) => {
         </div>
         <div className="right">
           <h1>
-            <i class="material-icons mdc-button__icon" aria-hidden="true">
+            <i className="material-icons mdc-button__icon" aria-hidden="true">
               timer
             </i>
             Your last score: {timer}s
@@ -47,9 +45,7 @@ export const Game = (props) => {
           Veteran
         </button>
       </section>
-      <DndProvider backend={HTML5Backend}>
-        <GameContainer />
-      </DndProvider>
+      <GameContainer />
     </div>
   );
 };
