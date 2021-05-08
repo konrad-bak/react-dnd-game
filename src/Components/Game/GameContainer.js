@@ -7,9 +7,21 @@ const GameContainer = () => {
   const { increaseTime, setCardsVals, setIsDirty } = useDispatchGame();
 
   const onDrop = (state) => (id) => {
-    const currentCard = { ...cardsVals[id], state };
-    setCardsVals({ ...cardsVals, ...{ [id]: currentCard } });
-    if (state !== "selectable" && state !== id) {
+    setCardsVals(
+      cardsVals.map((card) => {
+        if (card.id === id) {
+          return { ...card, state };
+        }
+        return card;
+      })
+    );
+    const droppedItem = cardsVals.find((card) => {
+      if (card.id === id) {
+        return card;
+      }
+    });
+
+    if (state !== "selectable" && !droppedItem.expected.includes(state)) {
       increaseTime();
     }
   };
@@ -29,8 +41,7 @@ const GameContainer = () => {
             maxItems={5}
             onDrop={onDrop("selectable")}
           >
-            {Object.keys(cardsVals)
-              .map((key) => ({ id: key, ...cardsVals[key] }))
+            {cardsVals
               .filter((card) => card.state === "selectable")
               .map((card) => (
                 <DragItem
@@ -49,43 +60,38 @@ const GameContainer = () => {
           style={{ display: "flex", justifyContent: "center" }}
         >
           <DropItem className="solution" maxItems={1} onDrop={onDrop("1")}>
-            {Object.keys(cardsVals)
-              .map((key) => ({ id: key, ...cardsVals[key] }))
+            {cardsVals
               .filter((card) => card.state === "1")
               .map((card) => (
-                <DragItem id={card.id} data={card} key={card.id} />
+                <DragItem id={card.id} data={card} key={`card ${card.id}`} />
               ))}
           </DropItem>
           <DropItem className="solution" maxItems={1} onDrop={onDrop("2")}>
-            {Object.keys(cardsVals)
-              .map((key) => ({ id: key, ...cardsVals[key] }))
+            {cardsVals
               .filter((card) => card.state === "2")
               .map((card) => (
-                <DragItem id={card.id} data={card} key={card.id} />
+                <DragItem id={card.id} data={card} key={`card ${card.id}`} />
               ))}
           </DropItem>
           <DropItem className="solution" maxItems={1} onDrop={onDrop("3")}>
-            {Object.keys(cardsVals)
-              .map((key) => ({ id: key, ...cardsVals[key] }))
+            {cardsVals
               .filter((card) => card.state === "3")
               .map((card) => (
-                <DragItem id={card.id} data={card} key={card.id} />
+                <DragItem id={card.id} data={card} key={`card ${card.id}`} />
               ))}
           </DropItem>
           <DropItem className="solution" maxItems={1} onDrop={onDrop("4")}>
-            {Object.keys(cardsVals)
-              .map((key) => ({ id: key, ...cardsVals[key] }))
+            {cardsVals
               .filter((card) => card.state === "4")
               .map((card) => (
-                <DragItem id={card.id} data={card} key={card.id} />
+                <DragItem id={card.id} data={card} key={`card ${card.id}`} />
               ))}
           </DropItem>
           <DropItem className="solution" maxItems={1} onDrop={onDrop("5")}>
-            {Object.keys(cardsVals)
-              .map((key) => ({ id: key, ...cardsVals[key] }))
+            {cardsVals
               .filter((card) => card.state === "5")
               .map((card) => (
-                <DragItem id={card.id} data={card} key={card.id} />
+                <DragItem id={card.id} data={card} key={`card ${card.id}`} />
               ))}
           </DropItem>
         </div>

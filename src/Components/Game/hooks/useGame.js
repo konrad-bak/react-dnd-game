@@ -11,46 +11,51 @@ import Zimg from "../letters/z.svg";
 import Oimg from "../letters/o.svg";
 import Vimg from "../letters/v.svg";
 import Uimg from "../letters/u.svg";
-import { shuffleObject } from "../../../helpers/shuffleObject";
+import { shuffleArray } from "../../../helpers/shuffleArray";
 
 const GameStateContext = createContext(undefined);
 const GameDispatchContext = createContext(undefined);
 
-let cards = {
-  1: {
+let cards = [
+  {
     img: Zimg,
     value: "Z",
     state: "selectable",
     expected: ["1"],
+    id: "Z",
   },
-  2: {
+  {
     img: Oimg,
     value: "O",
     state: "selectable",
     expected: ["2", "3"],
+    id: "O1",
   },
-  3: {
+  {
     img: Oimg,
     value: "O",
     state: "selectable",
     expected: ["2", "3"],
+    id: "O2",
   },
-  4: {
+  {
     img: Vimg,
     value: "V",
     state: "selectable",
     expected: ["4"],
+    id: "V",
   },
-  5: {
+  {
     img: Uimg,
     value: "U",
     state: "selectable",
     expected: ["5"],
+    id: "U",
   },
-};
+];
 
 export const GameProvider = ({ children }) => {
-  const [cardsVals, setCardsVals] = useState(shuffleObject(cards));
+  const [cardsVals, setCardsVals] = useState(shuffleArray(cards));
   const [timer, setTimer] = useState(0);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isDirty, setIsDirty] = useState(false);
@@ -72,9 +77,10 @@ export const GameProvider = ({ children }) => {
   }, []);
 
   const restartGame = () => {
-    setCardsVals(shuffleObject(cards));
+    setCardsVals(shuffleArray(cards));
     setIsDirty(false);
     setTimer(0);
+    setIsSuccess(false);
   };
 
   const actions = {
@@ -89,16 +95,13 @@ export const GameProvider = ({ children }) => {
 
   useEffect(() => {
     if (isDirty) startTimer();
-    return () => {
-      stopTimer();
-    };
   }, [isDirty, startTimer, stopTimer]);
 
   useEffect(() => {
-    const values = Object.values(cardsVals);
-    const isSuccess = values.every((val) => {
+    const isSuccess = cardsVals.every((val) => {
       return val.expected.includes(val.state);
     });
+
     if (isSuccess) setIsSuccess(true);
   }, [cardsVals]);
 

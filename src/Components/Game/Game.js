@@ -4,8 +4,6 @@ import { useGame } from "./hooks/useGame";
 export const Game = (props) => {
   const { timer } = useGame();
 
-  console.log(timer);
-
   return (
     <div>
       <section
