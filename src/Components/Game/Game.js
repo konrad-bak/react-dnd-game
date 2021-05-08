@@ -1,37 +1,10 @@
-import { useState, useRef } from "react";
 import GameContainer from "./GameContainer";
+import { useGame } from "./hooks/useGame";
 
 export const Game = (props) => {
-  const [timer, setTimer] = useState(0);
-  let intervalId = useRef(null);
+  const { timer } = useGame();
 
-  // const restartGame = () => {
-
-  //   setTimer(0);
-
-  // }
-
-  const increaseTime = () => {
-    setTimer((prev) => prev + 10);
-  };
-
-  const startTimer = () => {
-    if (timer > 0) return;
-    intervalId.current = setInterval(() => {
-      setTimer((prev) => prev + 1);
-    }, 1000);
-  };
-
-  const stopTimer = () => {
-    clearInterval(intervalId.current);
-    setTimeout(() => {
-      restartGame();
-    }, 10000);
-  };
-
-  const restartGame = () => {
-    setTimer(0);
-  };
+  console.log(timer);
 
   return (
     <div>
@@ -55,7 +28,6 @@ export const Game = (props) => {
             Your last score: {timer}s
           </h1>
           <h2>Be as quick as possible!</h2>
-          <button onClick={startTimer}>Start</button>
         </div>
       </section>
       <section className="difficulty">
@@ -68,11 +40,7 @@ export const Game = (props) => {
           Veteran
         </button>
       </section>
-      <GameContainer
-        onStart={startTimer}
-        onStop={stopTimer}
-        penalty={increaseTime}
-      />
+      <GameContainer />
     </div>
   );
 };

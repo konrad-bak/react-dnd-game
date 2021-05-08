@@ -3,7 +3,7 @@ import "../styles.css";
 import useDrag from "../hooks/useDrag";
 import View from "./view";
 
-const DragItem = ({ dragEffect, data, key, id, onTouch }) => {
+const DragItem = ({ dragEffect, data, id, onTouch }) => {
   const dragRef = useRef();
   const [classValue, setClassValue] = useState("grab");
   useDrag({

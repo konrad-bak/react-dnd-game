@@ -1,68 +1,18 @@
-import { useState, useEffect } from "react";
 import DragItem from "./drag-item";
 import DropItem from "./drop-item";
+import { useGame, useDispatchGame } from "./hooks/useGame";
 
-import Zimg from "./letters/z.svg";
-import Oimg from "./letters/o.svg";
-import Vimg from "./letters/v.svg";
-import Uimg from "./letters/u.svg";
-
-let cards = {
-  1: {
-    img: Zimg,
-    value: "Z",
-    state: "selectable",
-    expected: ["1"],
-  },
-  2: {
-    img: Oimg,
-    value: "O",
-    state: "selectable",
-    expected: ["2", "3"],
-  },
-  3: {
-    img: Oimg,
-    value: "O",
-    state: "selectable",
-    expected: ["2", "3"],
-  },
-  4: {
-    img: Vimg,
-    value: "V",
-    state: "selectable",
-    expected: ["4"],
-  },
-  5: {
-    img: Uimg,
-    value: "U",
-    state: "selectable",
-    expected: ["5"],
-  },
-};
-
-const GameContainer = ({ onStart, onStop, penalty }) => {
-  const [cardsVals, setCardsVals] = useState(cards);
-  const [isDirty, setIsDirty] = useState(false);
+const GameContainer = () => {
+  const { cardsVals, isDirty } = useGame();
+  const { increaseTime, setCardsVals, setIsDirty } = useDispatchGame();
 
   const onDrop = (state) => (id) => {
     const currentCard = { ...cardsVals[id], state };
     setCardsVals({ ...cardsVals, ...{ [id]: currentCard } });
     if (state !== "selectable" && state !== id) {
-      penalty();
+      increaseTime();
     }
   };
-
-  useEffect(() => {
-    if (isDirty) onStart();
-  }, [isDirty, onStart]);
-
-  useEffect(() => {
-    const values = Object.values(cardsVals);
-    const isSuccess = values.every((val) => {
-      return val.expected.includes(val.state);
-    });
-    if (isSuccess) onStop();
-  });
 
   return (
     <>
