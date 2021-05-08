@@ -8,7 +8,6 @@ const useDrop = ({ ref, onDrop }) => {
   };
 
   const dropCb = (ev) => {
-    console.log("DEBUGGING:  ~ file: useDrop.js ~ line 11 ~ dropCb ~ ev", onDrop);
     ev.preventDefault();
     onDrop(ev.dataTransfer.getData("source"));
     updateDropState("dropped");

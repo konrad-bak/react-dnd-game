@@ -1,13 +1,36 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import GameContainer from "./GameContainer";
 
 export const Game = (props) => {
   const [timer, setTimer] = useState(0);
+  let intervalId = useRef(null);
+
+  // const restartGame = () => {
+
+  //   setTimer(0);
+
+  // }
+
+  const increaseTime = () => {
+    setTimer((prev) => prev + 10);
+  };
 
   const startTimer = () => {
-    setInterval(() => {
+    if (timer > 0) return;
+    intervalId.current = setInterval(() => {
       setTimer((prev) => prev + 1);
     }, 1000);
+  };
+
+  const stopTimer = () => {
+    clearInterval(intervalId.current);
+    setTimeout(() => {
+      restartGame();
+    }, 10000);
+  };
+
+  const restartGame = () => {
+    setTimer(0);
   };
 
   return (
@@ -45,7 +68,11 @@ export const Game = (props) => {
           Veteran
         </button>
       </section>
-      <GameContainer />
+      <GameContainer
+        onStart={startTimer}
+        onStop={stopTimer}
+        penalty={increaseTime}
+      />
     </div>
   );
 };
