@@ -1,16 +1,9 @@
-import { useState } from "react";
 import GameContainer from "./GameContainer";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import { useGame, useDispatchGame } from "./hooks/useGame";
 
 export const Game = (props) => {
-  const [timer, setTimer] = useState(0);
-
-  const startTimer = () => {
-    setInterval(() => {
-      setTimer((prev) => prev + 1);
-    }, 1000);
-  };
+  const { timer, lastScore, difficulty } = useGame();
+  const { setDifficulty } = useDispatchGame();
 
   return (
     <div>
@@ -28,28 +21,49 @@ export const Game = (props) => {
         </div>
         <div className="right">
           <h1>
-            <i class="material-icons mdc-button__icon" aria-hidden="true">
+            <i className="material-icons mdc-button__icon" aria-hidden="true">
               timer
             </i>
-            Your last score: {timer}s
+            Your score: {timer}s
           </h1>
+          <h2>Your last score: {lastScore}s</h2>
           <h2>Be as quick as possible!</h2>
-          <button onClick={startTimer}>Start</button>
         </div>
       </section>
-      <section className="difficulty">
+      <section className={`difficulty ${difficulty}`}>
         <h2>Choose difficulty:</h2>
-        <button className="normal mdc-button mdc-button--outlined">
+        <button
+          className="normal mdc-button mdc-button--outlined"
+          onClick={() => setDifficulty("normal")}
+        >
           Normal
         </button>
-        <button className="hard mdc-button mdc-button--outlined">Hard</button>
-        <button className="veteran mdc-button mdc-button--outlined">
+        <button
+          className="hard mdc-button mdc-button--outlined"
+          onClick={() => setDifficulty("hard")}
+        >
+          Hard
+        </button>
+        <button
+          className="veteran mdc-button mdc-button--outlined"
+          onClick={() => setDifficulty("veteran")}
+        >
           Veteran
         </button>
+        <div class="snowflakes" aria-hidden="true">
+          <div class="snowflake">❅</div>
+          <div class="snowflake">❅</div>
+          <div class="snowflake">❆</div>
+          <div class="snowflake">❄</div>
+          <div class="snowflake">❅</div>
+          <div class="snowflake">❆</div>
+          <div class="snowflake">❄</div>
+          <div class="snowflake">❅</div>
+          <div class="snowflake">❆</div>
+          <div class="snowflake">❄</div>
+        </div>
       </section>
-      <DndProvider backend={HTML5Backend}>
-        <GameContainer />
-      </DndProvider>
+      <GameContainer />
     </div>
   );
 };

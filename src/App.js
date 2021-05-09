@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./App.css";
 import { Welcome } from "./Components/Welcome";
 import { Game } from "./Components/Game/Game";
+import { GameProvider } from "./Components/Game/hooks/useGame";
 
 function App() {
   const [name, setName] = useState("");
@@ -18,12 +19,18 @@ function App() {
   };
 
   return (
-    <div className="App">
-      {page === "welcome" && (
-        <Welcome name={name} onChange={handleChange} onSubmit={handleSubmit} />
-      )}
-      {page === "game" && <Game name={name} />}
-    </div>
+    <GameProvider>
+      <div className="App">
+        {page === "welcome" && (
+          <Welcome
+            name={name}
+            onChange={handleChange}
+            onSubmit={handleSubmit}
+          />
+        )}
+        {page === "game" && <Game name={name} />}
+      </div>
+    </GameProvider>
   );
 }
 

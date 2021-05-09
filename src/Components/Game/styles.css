@@ -1,0 +1,39 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.elem {
+  height: 50px;
+  width: 50px;
+  border: 1px solid magenta;
+}
+
+.grab {
+  cursor: grab;
+}
+.grabbing {
+  cursor: grabbing;
+  border: 1px dotted;
+}
+.selectedEffect {
+  background: aqua;
+}
+
+.box {
+  display: flex;
+  width: 100%;
+}
+
+.difficulty.normal button.normal {
+  background-color: purple;
+  color: white;
+}
+.difficulty.hard button.hard {
+  background-color: purple;
+  color: white;
+}
+.difficulty.veteran button.veteran {
+  background-color: purple;
+  color: white;
+}
