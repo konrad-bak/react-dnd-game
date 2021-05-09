@@ -3,7 +3,13 @@ import View from "./view";
 
 import useDrop from "../hooks/useDrop";
 
-const DropItem = ({ children, heading, onDrop, className, maxItems = 1, onEmpty }) => {
+const DropItem = ({
+  children,
+  onDrop,
+  className = "",
+  maxItems = 1,
+  onEmpty,
+}) => {
   const dropRef = useRef();
   const checkMaxItems = (id) => {
     if (maxItems === React.Children.count(children)) return;
@@ -15,12 +21,7 @@ const DropItem = ({ children, heading, onDrop, className, maxItems = 1, onEmpty 
   });
 
   return (
-    <View
-      ref={dropRef}
-      heading={heading}
-      droppedItem={droppedItem}
-      className={className}
-    >
+    <View ref={dropRef} droppedItem={droppedItem} className={className}>
       {children}
     </View>
   );

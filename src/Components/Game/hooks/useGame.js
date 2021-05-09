@@ -57,6 +57,8 @@ let cards = [
 export const GameProvider = ({ children }) => {
   const [cardsVals, setCardsVals] = useState(shuffleArray(cards));
   const [timer, setTimer] = useState(0);
+  const [difficulty, setDifficulty] = useState("normal");
+  const [lastScore, setLastScore] = useState(0);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isDirty, setIsDirty] = useState(false);
 
@@ -76,12 +78,14 @@ export const GameProvider = ({ children }) => {
     clearInterval(intervalId.current);
   }, []);
 
-  const restartGame = () => {
-    setCardsVals(shuffleArray(cards));
+  const restartGame = useCallback(() => {
     setIsDirty(false);
-    setTimer(0);
+    setCardsVals(shuffleArray(cards));
     setIsSuccess(false);
-  };
+    setLastScore(timer);
+    setTimer(0);
+    setDifficulty("normal");
+  }, [timer]);
 
   const actions = {
     setCardsVals,
@@ -90,8 +94,9 @@ export const GameProvider = ({ children }) => {
     stopTimer,
     restartGame,
     setIsDirty,
+    setDifficulty,
   };
-  const state = { cardsVals, timer, isDirty };
+  const state = { cardsVals, timer, difficulty, isDirty, lastScore };
 
   useEffect(() => {
     if (isDirty) startTimer();
@@ -112,7 +117,7 @@ export const GameProvider = ({ children }) => {
         restartGame();
       }, 10000);
     }
-  }, [isSuccess, stopTimer]);
+  }, [isSuccess, stopTimer, restartGame]);
 
   return (
     <GameDispatchContext.Provider value={actions}>

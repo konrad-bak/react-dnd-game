@@ -24,3 +24,16 @@
   display: flex;
   width: 100%;
 }
+
+.difficulty.normal button.normal {
+  background-color: purple;
+  color: white;
+}
+.difficulty.hard button.hard {
+  background-color: purple;
+  color: white;
+}
+.difficulty.veteran button.veteran {
+  background-color: purple;
+  color: white;
+}

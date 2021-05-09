@@ -3,7 +3,7 @@ import DropItem from "./drop-item";
 import { useGame, useDispatchGame } from "./hooks/useGame";
 
 const GameContainer = () => {
-  const { cardsVals, isDirty } = useGame();
+  const { cardsVals, isDirty, difficulty } = useGame();
   const { increaseTime, setCardsVals, setIsDirty } = useDispatchGame();
 
   const onDrop = (state) => (id) => {
@@ -26,19 +26,12 @@ const GameContainer = () => {
 
   return (
     <>
-      <section
-        className="game"
-        style={{ overflow: "hidden", clear: "both", marginTop: "1.5rem" }}
-      >
+      <section className="game" style={{ clear: "both", marginTop: "1.5rem" }}>
         <div
-          className="cards"
+          className={`cards ${difficulty}`}
           style={{ display: "flex", justifyContent: "center" }}
         >
-          <DropItem
-            heading="Container"
-            maxItems={5}
-            onDrop={onDrop("selectable")}
-          >
+          <DropItem maxItems={5} onDrop={onDrop("selectable")}>
             {cardsVals
               .filter((card) => card.state === "selectable")
               .map((card) => (
